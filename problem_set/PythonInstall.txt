@@ -1,0 +1,53 @@
+INSTALLING PYTHON 
+
+Python is an open source programming language.  Here is a link to a packaged toolset, which you can download free via an academic license.  
+
+https://www.enthought.com/academic-subscriptions/index.html
+
+You can install python by following the above link.  You have a choice between mac, linux, and windows operating systems. Note that the download files are large, about 300 Mb.
+
+
+EDITING PYTHON FILES
+
+To start editing, open Canopy and open your python file in the editor.  The files you need for this homework are all on Gauchospace.
+
+
+RUNNING PYTHON
+
+Once you have opened example_plot.py in Canopy, click the green triangle to run it. You may also type python commands directly into the command window, which is usually the pane below the file editor. For example, if you have already run the example script, typing "x_data" lists a vector of the x data that was used in example_plot.py.  Note that python will need to be able to see the “data.txt” file or this script will give an error when you run it. If there is an error, the program will point to the line of code where the error occured. To see python’s current working directory, type “pwd” (for “print working directory”) at the command prompt.  To change the working directory, for example to the place where you put data.txt, use the “cd” command.
+      
+
+PRINTING PYTHON FIGURES
+
+When you run the example_plot.py program, it will compute 3 figures.  
+To print, click on disk icon, and then save as a file, for example "plot1.pdf".
+Open this file and print in the normal manner.
+
+
+VECTOR MATH
+
+To make data processing easier, Python transparently processes variables as vectors and matrices.
+For example, variable "experiment" is array of input data, "experiment[1]" is vector of all x values.
+"x_values = linspace(1,20,10)" makes vector of 10 points equally spaced between 1 and 20.
+"y_values = x_values**2" squares each data value in the x_values vector, producing a y_values vector.
+
+
+TUTORIALS
+
+Basic python operations:
+https://docs.python.org/2/tutorial/
+
+Lots of examples of plots:
+http://matplotlib.org/gallery.html 
+
+
+HELP
+
+Typing ? in interactive mode will give help infomation.
+Typing sin? describes how to use the sin() function
+Google is your friend.
+Also, see the documentation for python and functions in scipy and matplotlib at:
+Scipy data analysis tutorial: http://scipy.org/Getting_Started
+Scipy: http://docs.scipy.org/doc/
+Python: http://docs.python.org/
+Matplotlib: http://matplotlib.sourceforge.net/
