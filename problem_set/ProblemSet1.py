@@ -14,24 +14,17 @@ temperatureInCelsius = RateTData[:,0]
 reactionRate = RateTData[:,1]
 # Convert Celsius temperature data to Kelvin
 temperatureInKelvin = temperatureInCelsius + 273.15
-# Next plot is figure 2
+
+# Next plot the figure
 plt.figure(1)
-# Scatter plot with error bars, 'kx'=plot as black x
-#plt.errorbar(x_data, y_data, yerr=y_error, fmt='kx')
 # Plots without error bars, 'k.' plots as black points
 plt.plot(1 / temperatureInKelvin, np.log(reactionRate), 'k.')
 plt.title('Arrhenius plot of RateT.txt data')
 plt.xlabel('Inverse of temperature in Kelvin')
 plt.ylabel('Logarithm of reaction rate')
+plt.show()
 
-"""
-The data plotted in this way lies on a straight line because a straight 
-line in the log plot of the reaction rate k means that the relationship between
-k and 1/T (where T is the temperature in Kelvin) is exponential.
-This makes sense because the Arrhenius equation is
-k = A*exp(-E/(R*T))
-where R is the gas constant, A is the prefactor, and E is the activation energy.
-"""
+print("The data plotted in this way lies on a straight line because a straight line in the log plot of the reaction rate k means that the relationship between k and 1/T (where T is the temperature in Kelvin) is exponential. This makes sense because the Arrhenius equation is k = A*exp(-E/(R*T)) where R is the gas constant, A is the prefactor, and E is the activation energy.\n")
 
 # Find the activation energy (E) and the prefactor (A)
 # Find the slope m and intercept of the straight line in the plot b for log(k) = m*(1/T) + b
@@ -74,6 +67,7 @@ plt.plot(heatTemperatureInKelvin, heatCapacity)
 plt.title("HeatCapacity.txt data")
 plt.xlabel("Temperature in Kelvin")
 plt.ylabel("Heat capacity")
+plt.show()
 
 # Try 3rd degree polynomail fit to determine A and B
 B, _, A, __ = np.polyfit(heatTemperatureInKelvin, heatCapacity, 3)
@@ -94,6 +88,7 @@ plt.plot(heatTemperatureInKelvin, linearData)
 plt.title("Linear plot of HeatCapacity.txt data")
 plt.xlabel("A*T")
 plt.ylabel("C - B*(T**3)")
+plt.show()
 print("Successful.")
 
 
@@ -130,29 +125,13 @@ for ax in axs.flat:
 
 fig.tight_layout()
 
-"""
-The loglog() plot gives the clearest and most descriptive presentation of the
-data because the data in the loglog() plot is linear and using this information
-and then we can determine the approximate formula knowing that it will be a
-power law of some kind
-"""
-
-# Replot the loglog() representation of the data in a bigger size
-plt.figure(5)
-plt.title("loglog()")
-plt.loglog(tubeDiameter, waterFlowRate)
-plt.plot(np.log10(tubeDiameter), np.log10(waterFlowRate))
-plt.legend(("loglog()", "log10log10()"))
+print("The loglog() plot gives the clearest and most descriptive presentation of the data because the data in the loglog() plot is linear and using this information and then we can determine the approximate formula knowing that it will be a power law of some kind.\n")
 
 # Power law is y = m*(x**b) + c
 def powerlaw(x, m, b, c):
     return m * x**b + c
 
-"""
-From the plots we see that there are two main different slopes and behaviours
-for small diameter (about less than 10^-1 = 0.1) and for large diameter
-(about more than 0.5)
-"""
+print("From the plots we see that there are two main different slopes and behaviours for small diameter (about less than 10^-1 = 0.1) and for large diameter (about more than 0.5).\n")
 
 # Calculate parameters m, b, c for different diameters
 # Segregate dataset for smaller (less than 0.1) and larger (more than 0.5) tube diameters
@@ -204,6 +183,7 @@ plt.title("Flow.txt general model performance")
 plt.xlabel("tube diameter")
 plt.ylabel("water flow rate")
 plt.legend(("Raw flow rate data", "General model flow rate"))
+plt.show()
 
 # Now on to small diameter model
 smallDiameterModelFlowRate = []
@@ -218,6 +198,7 @@ plt.title("Flow.txt Small diameter model performance")
 plt.xlabel("tube diameter")
 plt.ylabel("water flow rate")
 plt.legend(("Raw flow rate data", "Small diameter model flow rate"))
+plt.show()
 
 # Finish with large diameter model
 largeDiameterModelFlowRate = []
@@ -232,6 +213,7 @@ plt.title("Flow.txt Large diameter model performance")
 plt.xlabel("tube diameter")
 plt.ylabel("water flow rate")
 plt.legend(("Raw flow rate data", "Large diameter model flow rate"))
+plt.show()
 
 print("Successful.")
 
