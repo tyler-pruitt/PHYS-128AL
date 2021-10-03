@@ -233,3 +233,21 @@ print("Difference Between Timer A (Bottom Up) and Timer B (Bottom Up) Statistics
 
 averageABottomBBottom, stdABottomBBottom = CalculateAvgAndStd(ABottomBBottom, "difference between A (Bottom Up) and B (Bottom Up)", "s")
 
+
+# Let's now answer the question of what the difference between the two timers is
+print("Difference Between Timers:")
+
+# First let's calculate the difference by taking an average of the different combinations of A and B
+AVersusB = TimerAandBData[:,1]
+averageAVersusB, stdAVersusB = CalculateAvgAndStd(AVersusB, "different combinations of A and B", "s")
+
+# Let's now calculate using the average of timer A and the average of timer B
+averageDifference = averageB - averageA
+stdDifference = stdA + stdB
+
+stdDifference, precision = roundToNearest(stdDifference)
+averageDifference = round(averageDifference, precision)
+
+print("\tAverage difference between timer A and timer B:", averageDifference, "s")
+print("\tStd of difference between timer A and timer B", stdDifference, "s")
+
