@@ -6,19 +6,20 @@ from scipy.optimize import curve_fit
 # RateT.txt plot
 
 print("Problem 3: RateT.txt")
-print("Loading...")
+
 # Load input data from file RateT.txt, comma separated
 RateTData = np.loadtxt("RateT.txt", delimiter=",")
-# For clarity, explicitly name vectors
+
+# Separate data into temperature and reaction rate
 temperatureInCelsius = RateTData[:,0]
 reactionRate = RateTData[:,1]
+
 # Convert Celsius temperature data to Kelvin
 temperatureInKelvin = temperatureInCelsius + 273.15
 
-# Next plot the figure
+# Plot the figure
 plt.figure(1)
-# Plots without error bars, 'k.' plots as black points
-plt.plot(1 / temperatureInKelvin, np.log(reactionRate), 'k.')
+plt.plot(1 / temperatureInKelvin, np.log(reactionRate), 'r.-')
 plt.title('Arrhenius plot of RateT.txt data')
 plt.xlabel('Inverse of temperature in Kelvin')
 plt.ylabel('Logarithm of reaction rate')
@@ -30,32 +31,22 @@ print("The data plotted in this way lies on a straight line because a straight l
 # Find the slope m and intercept of the straight line in the plot b for log(k) = m*(1/T) + b
 m, b = np.polyfit(1 / temperatureInKelvin, np.log(reactionRate), 1)
 
-# Now to do some math
-"""
-log(k) = m/T + b
-k = exp(m/T + b)
-k = exp(b)*exp(m/T)
-then according to the Arrhenius equation
-A = exp(b),
--E/(R*T) = m/T
-so
-E = -(R*m)
-"""
-
 # Now to calculate activation energy (E) and prefactor (A)
 R = 8.31446261815324
 activationEnergy = -(R*m)
 prefactor = np.exp(b)
+
 print("Activation energy:", activationEnergy, "J")
 print("Prefactor:", prefactor, "in SI units")
-print("Successful.")
+
 
 # HeatCapacity.txt
 
 print("\nProblem 4: HeatCapacity.txt")
-print("Loading...")
+
 # Load data from file HeatCapacity.txt
 HeatCapacityData = np.loadtxt("HeatCapacity.txt", delimiter=",")
+
 # Seperate data into temperature in Kelvin and heat capacity
 heatTemperatureInKelvin = HeatCapacityData[:,0]
 heatCapacity = HeatCapacityData[:,1]
@@ -63,7 +54,7 @@ heatCapacity = HeatCapacityData[:,1]
 # Plot relationship between temparture and heat capacity
 # Expected behaviour is C = A*T + B*(T**3)
 plt.figure(2)
-plt.plot(heatTemperatureInKelvin, heatCapacity)
+plt.plot(heatTemperatureInKelvin, heatCapacity, "b.")
 plt.title("HeatCapacity.txt data")
 plt.xlabel("Temperature in Kelvin")
 plt.ylabel("Heat capacity")
@@ -84,20 +75,20 @@ print("B:", B, "J/k^4")
 # to ensure linear behaviour of the data
 plt.figure(3)
 linearData = heatCapacity - B*(heatTemperatureInKelvin**3)
-plt.plot(heatTemperatureInKelvin, linearData)
+plt.plot(heatTemperatureInKelvin, linearData, "b.-")
 plt.title("Linear plot of HeatCapacity.txt data")
 plt.xlabel("A*T")
 plt.ylabel("C - B*(T**3)")
 plt.show()
-print("Successful.")
 
 
 # Flow.txt
 
 print("\nProblem 5: Flow.txt")
-print("Loading...")
+
 # Load data from file Flow.txt
 FlowData = np.loadtxt("Flow.txt", delimiter=",")
+
 # Seperate data into tube diameter and water flow rate
 tubeDiameter = FlowData[:,0]
 waterFlowRate = FlowData[:,1]
@@ -108,16 +99,16 @@ fig, axs = plt.subplots(2, 2)
 fig.suptitle("Flow.txt data")
 
 # Top left use standard plot()
-axs[0,0].plot(tubeDiameter, waterFlowRate)
+axs[0,0].plot(tubeDiameter, waterFlowRate, "b.-")
 axs[0,0].set_title("plot()")
 # Top right use semilogx()
-axs[0,1].semilogx(tubeDiameter, waterFlowRate)
+axs[0,1].semilogx(tubeDiameter, waterFlowRate, "b.-")
 axs[0,1].set_title("semilogx()")
 # Bottom left use semilogy()
-axs[1,0].semilogy(tubeDiameter, waterFlowRate)
+axs[1,0].semilogy(tubeDiameter, waterFlowRate, "b.-")
 axs[1,0].set_title("semilogy()")
 # Bottom right use loglog()
-axs[1,1].loglog(tubeDiameter, waterFlowRate)
+axs[1,1].loglog(tubeDiameter, waterFlowRate, "b.-")
 axs[1,1].set_title("loglog()")
 
 for ax in axs.flat:
@@ -177,7 +168,7 @@ for i in range(len(tubeDiameter)):
     generalModelFlowRate += [powerlaw(tubeDiameter[i], diameterParameters[0], diameterParameters[1], diameterParameters[2])]
 
 plt.figure(6)
-plt.plot(tubeDiameter, waterFlowRate, "b")
+plt.plot(tubeDiameter, waterFlowRate, "b.-")
 plt.plot(tubeDiameter, generalModelFlowRate, "r+")
 plt.title("Flow.txt general model performance")
 plt.xlabel("tube diameter")
@@ -192,7 +183,7 @@ for i in range(len(tubeDiameter)):
     smallDiameterModelFlowRate += [powerlaw(tubeDiameter[i], smallDiameterParameters[0], smallDiameterParameters[1], smallDiameterParameters[2])]
 
 plt.figure(7)
-plt.plot(tubeDiameter, waterFlowRate, "b")
+plt.plot(tubeDiameter, waterFlowRate, "b.-")
 plt.plot(tubeDiameter, smallDiameterModelFlowRate, "r+")
 plt.title("Flow.txt Small diameter model performance")
 plt.xlabel("tube diameter")
@@ -207,13 +198,11 @@ for i in range(len(tubeDiameter)):
     largeDiameterModelFlowRate += [powerlaw(tubeDiameter[i], largeDiameterParameters[0], largeDiameterParameters[1], largeDiameterParameters[2])]
 
 plt.figure(8)
-plt.plot(tubeDiameter, waterFlowRate, "b")
+plt.plot(tubeDiameter, waterFlowRate, "b.-")
 plt.plot(tubeDiameter, largeDiameterModelFlowRate, "r+")
 plt.title("Flow.txt Large diameter model performance")
 plt.xlabel("tube diameter")
 plt.ylabel("water flow rate")
 plt.legend(("Raw flow rate data", "Large diameter model flow rate"))
 plt.show()
-
-print("Successful.")
 
