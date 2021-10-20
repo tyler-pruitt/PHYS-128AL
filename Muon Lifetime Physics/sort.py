@@ -22,7 +22,8 @@ for i in range(len(data)):
 
 bins = int(input("Enter the number of bins: "))
 
-title = name + " (" + str(bins) + " bins)"
+count = len(data)
+title = name + " (" + str(bins) + " bins, count: " + str(count) + ")"
 
 plt.figure(1)
 plt.hist(data[:,0], bins)
