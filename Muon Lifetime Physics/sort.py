@@ -37,3 +37,16 @@ std = np.std(data[:,0])
 
 print("Average:", average, "usec")
 print("Std:", std, "usec")
+
+"""
+newPositon = position[:-1]
+
+plt.figure(2)
+plt.plot(newPosition, count, 'r.')
+
+plt.figure(3)
+plt.semilogy(newPosition, count, 'r.')
+
+Think about excluding the farthest two points in the dataset because
+they are not near the line in the linear semilogy plot.
+"""
