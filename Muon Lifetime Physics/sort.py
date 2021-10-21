@@ -22,11 +22,11 @@ for i in range(len(data)):
 
 bins = int(input("Enter the number of bins: "))
 
-count = len(data)
-title = name + " (" + str(bins) + " bins, count: " + str(count) + ")"
+totalCount = len(data)
+title = name + " (" + str(bins) + " bins, count: " + str(totalCount) + ")"
 
 plt.figure(1)
-plt.hist(data[:,0], bins)
+count, position, _ = plt.hist(data[:,0], bins)
 plt.xlabel("Muon Decay Time (usec)")
 plt.ylabel("Count")
 plt.title(title)
