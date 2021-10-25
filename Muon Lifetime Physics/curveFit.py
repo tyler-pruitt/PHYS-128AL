@@ -113,3 +113,6 @@ if isCurveFit in yes:
     plt.legend(("Raw data", "Model data"))
     plt.show()
     
+    lifeTime = (totalCount * 2 * xErr1[0]) / a
+    print("Lifetime:", lifeTime, "usec")
+    
