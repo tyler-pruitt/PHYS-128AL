@@ -55,11 +55,13 @@ if isCurveFit in yes:
     plt.plot(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
+    plt.title(title + " Data Points")
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
+    plt.title(title + " Data Points")
     
     
     parameters, covs = curve_fit(exponentialDecay, position, count)
@@ -78,6 +80,7 @@ if isCurveFit in yes:
     plt.plot(position, modelData, "b-")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
+    plt.title("Experiment Versus Model")
     plt.legend(("Raw data", "Model data"))
     plt.show()
     

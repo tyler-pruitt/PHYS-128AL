@@ -15,7 +15,7 @@ def CalculateAvgAndStd(sampleData):
     
     return avg, std
 
-isProcess = input("Does this need to be merged with another file (i.e. run process.py) (Yes/No)? ")
+isProcess = input("Does this need to be processed (i.e. run process.py) (Yes/No)? ")
 
 yes = ['Yes', 'yes', 'y', 'Y']
 no = ['No', 'no', 'n', 'N']
@@ -61,11 +61,13 @@ if isProcess in yes:
     plt.plot(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
+    plt.title(figureTitle + " Data Points")
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
+    plt.title(figureTitle + " Data Points")
     
     # Create a file to write the processed data to
     processedFile = open(processedFileName, "w+")
@@ -131,9 +133,11 @@ if isProcess in yes:
         plt.plot(filterPosition, filterCount, 'r.')
         plt.xlabel("Muon Decay Time (usec)")
         plt.ylabel("Count")
+        plt.title(filterFigureTitle + " Data Points")
         
         plt.figure(6)
         plt.semilogy(filterPosition, filterCount, 'r.')
         plt.xlabel("Muon Decay Time (usec)")
         plt.ylabel("Log of Count")
+        plt.title(filterFigureTitle + " Data Points")
     
