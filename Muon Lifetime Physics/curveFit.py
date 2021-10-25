@@ -19,6 +19,23 @@ def CalculateAvgAndStd(sampleData):
 def exponentialDecay(t, a, b, c):
     return a * np.exp(-b * t) + c
 
+def errorbar(times, counts):
+    
+    halfBinSize = (times[1] - times[0]) / 2.0
+    
+    timeError, countError = [], []
+    
+    for i in range(len(counts)):
+        if counts[i] == 0:
+            timeError += [0]
+            countError += [0]
+        else:
+            timeError += [halfBinSize]
+            countError += [1 / counts[i]]
+    
+    return timeError, countError
+    
+
 isCurveFit = input("Does this need to be curve fitted (i.e. run curveFit.py) (Yes/No)? ")
 
 yes = ['Yes', 'yes', 'y', 'Y']
@@ -51,17 +68,28 @@ if isCurveFit in yes:
     
     position = position[:-1]
     
+    zeroIndex = []
+    for i in range(len(position)):
+        if count[i] == 0.:
+            zeroIndex += [i]
+    
+    count, position = np.delete(count, zeroIndex), np.delete(position, zeroIndex)
+    
     plt.figure(2)
-    plt.plot(position, count, 'r.')
+    #plt.plot(position, count, 'r.')
+    xErr1, yErr1 = errorbar(position, count)
+    plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
     plt.title(title + " Data Points")
+    plt.show()
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
     plt.title(title + " Data Points")
+    plt.show()
     
     
     parameters, covs = curve_fit(exponentialDecay, position, count)
@@ -76,7 +104,8 @@ if isCurveFit in yes:
         modelData += [exponentialDecay(item, a, b, c)]
     
     plt.figure(4)
-    plt.plot(position, count, "r.")
+    #plt.plot(position, count, "r.")
+    plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
     plt.plot(position, modelData, "b-")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
