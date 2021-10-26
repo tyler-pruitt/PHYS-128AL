@@ -1,6 +1,6 @@
 #!/bin/bash
-python merge.py
-
 python process.py
+
+python merge.py
 
 python curveFit.py
