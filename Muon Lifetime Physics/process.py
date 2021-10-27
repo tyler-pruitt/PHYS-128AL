@@ -57,6 +57,13 @@ if isProcess in yes:
     
     position = position[:-1]
     
+    zeroIndex = []
+    for i in range(len(position)):
+        if count[i] == 0.:
+            zeroIndex += [i]
+    
+    count, position = np.delete(count, zeroIndex), np.delete(position, zeroIndex)
+    
     plt.figure(2)
     plt.plot(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
@@ -78,66 +85,4 @@ if isProcess in yes:
         processedFile.write(message)
     
     processedFile.close()
-    
-    # Think about excluding the farthest three points in the dataset because
-    # they are not near the line in the linear semilogy plot.
-    
-    # Filter the data is needed
-    isFilter = input("Should this data be filtered (Yes/No): ")
-    
-    yes = ['Yes', 'yes', 'y', 'Y']
-    no = ['No', 'no', 'n', 'N']
-    
-    if isFilter in yes:
-        filterFileName = input("Enter new file name for filtered data: ")
-        
-        maxThreshold = float(input("Enter max threshold (in usec) for data: "))
-        minThreshold = float(input("Enter min threshold (in usec) for data: "))
-        
-        sortedData = []
-    
-        for i in range(len(data[:,0])):
-            if (data[i,0] <= maxThreshold) and (data[i,0] >= minThreshold):
-                sortedData += [data[i]]
-        
-        sortedData = np.array(sortedData)
-        
-        filterFile = open(filterFileName, "w+")
-        
-        # Write the filtered data to the file
-        for i in range(len(sortedData)):
-            message = str(sortedData[i,0]) + " " + str(sortedData[i,1]) + "\n"
-            filterFile.write(message)
-        
-        filterFile.close()
-        
-        filterAvg, filterStd = CalculateAvgAndStd(sortedData[:,0])
-    
-        print("Filtered Average:", filterAvg, "usec")
-        print("Filtered Std:", filterStd, "usec")
-        
-        # Plot the filtered data in a histogram
-        filterFigureTitle = input("Enter title for figure of filtered data: ")
-        filterFigureTitle += " (" + str(bins) + " bins, count: " + str(totalCount) + ")"
-        
-        plt.figure(4)
-        filterCount, filterPosition, _ = plt.hist(sortedData[:,0], bins)
-        plt.xlabel("Muon Decay Time (usec)")
-        plt.ylabel("Count")
-        plt.title(filterFigureTitle)
-        plt.show()
-        
-        filterPosition = filterPosition[:-1]
-    
-        plt.figure(5)
-        plt.plot(filterPosition, filterCount, 'r.')
-        plt.xlabel("Muon Decay Time (usec)")
-        plt.ylabel("Count")
-        plt.title(filterFigureTitle + " Data Points")
-        
-        plt.figure(6)
-        plt.semilogy(filterPosition, filterCount, 'r.')
-        plt.xlabel("Muon Decay Time (usec)")
-        plt.ylabel("Log of Count")
-        plt.title(filterFigureTitle + " Data Points")
-    
+

@@ -15,8 +15,8 @@ no = ['No', 'no', 'n', 'N']
 
 if isMerge in yes:
 
-    fileName1 = input("Enter first sift file name: ")
-    fileName2 = input("Enter second sift file name: ")
+    fileName1 = input("Enter first data file name: ")
+    fileName2 = input("Enter second data file name: ")
     
     name = input("Enter file name for merged data: ")
     

@@ -98,6 +98,9 @@ if isCurveFit in yes:
     
     print("Model: " + str(a) + " * exp(-" + str(b) + " * t) + " + str(c))
     
+    print("Time Error bars: +/-", xErr1[0], "usec")
+    print("\nCount Error bars: +/-", yErr1)
+    
     modelData = []
     
     for item in position:
