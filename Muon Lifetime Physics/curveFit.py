@@ -110,9 +110,12 @@ if isCurveFit in yes:
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
     plt.title("Experiment Versus Model")
-    plt.legend(("Raw data", "Model data"))
+    plt.legend(("Model data", "Raw data"))
     plt.show()
     
-    lifeTime = (totalCount * 2 * xErr1[0]) / a
-    print("Lifetime:", lifeTime, "usec")
+    lifeTimeA = (totalCount * 2 * xErr1[0]) / a
+    print("Lifetime (A coefficient):", lifeTimeA, "usec")
+    
+    lifeTimeB = 1 / abs(b)
+    print("Lifetime (B coefficient):", lifeTimeB, "usec")
     
