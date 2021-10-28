@@ -9,11 +9,8 @@ Created on Wed Oct 27 13:45:20 2021
 import numpy as np
 import matplotlib.pyplot as plt
 
-def CalculateAvgAndStd(sampleData):
-    avg = np.average(sampleData)
-    std = np.std(sampleData)
-    
-    return avg, std
+from methods import CalculateAvgAndStd
+
 
 # Filter the data if needed
 isFilter = input("Does this data need to be filtered (i.e. run filter.py) (Yes/No)? ")
@@ -103,13 +100,13 @@ if isFilter in yes:
     plt.plot(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
-    plt.title(figureTitle + " Data Points")
+    plt.title(figureTitle)
     plt.show()
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
-    plt.title(figureTitle + " Data Points")
+    plt.title(figureTitle)
     plt.show()
 

@@ -10,31 +10,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-def CalculateAvgAndStd(sampleData):
-    avg = np.average(sampleData)
-    std = np.std(sampleData)
-    
-    return avg, std
+from methods import CalculateAvgAndStd
+from methods import exponentialDecay
+from methods import errorbar
+from methods import leastSquaresDist
+from methods import distance
 
-def exponentialDecay(t, a, b, c):
-    return a * np.exp(-b * t) + c
-
-def errorbar(times, counts):
-    
-    halfBinSize = (times[1] - times[0]) / 2.0
-    
-    timeError, countError = [], []
-    
-    for i in range(len(counts)):
-        if counts[i] == 0:
-            timeError += [0]
-            countError += [0]
-        else:
-            timeError += [halfBinSize]
-            countError += [1 / counts[i]]
-    
-    return timeError, countError
-    
 
 isCurveFit = input("Does this need to be curve fitted (i.e. run curveFit.py) (Yes/No)? ")
 
@@ -81,14 +62,14 @@ if isCurveFit in yes:
     plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
-    plt.title(title + " Data Points")
+    plt.title(title)
     plt.show()
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
-    plt.title(title + " Data Points")
+    plt.title(title)
     plt.show()
     
     
@@ -96,10 +77,15 @@ if isCurveFit in yes:
     
     a, b, c = parameters[0], parameters[1], parameters[2]
     
-    print("Model: " + str(a) + " * exp(-" + str(b) + " * t) + " + str(c))
+    parameterStd = np.sqrt(np.diag(covs))
     
-    print("Time Error bars: +/-", xErr1[0], "usec")
-    print("\nCount Error bars: +/-", yErr1)
+    print("Model: A * exp(-B * t) + C")
+    print("A:", a, "std:", parameterStd[0])
+    print("B:", b, "std:", parameterStd[1])
+    print("C:", c, "std:", parameterStd[2])
+    
+    print("\nTime Error bars: +/-", xErr1[0], "usec")
+    print("\nCount Error bars: +/-", yErr1, "\n")
     
     modelData = []
     
@@ -107,7 +93,6 @@ if isCurveFit in yes:
         modelData += [exponentialDecay(item, a, b, c)]
     
     plt.figure(4)
-    #plt.plot(position, count, "r.")
     plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
     plt.plot(position, modelData, "b-")
     plt.xlabel("Muon Decay Time (usec)")
@@ -116,9 +101,18 @@ if isCurveFit in yes:
     plt.legend(("Model data", "Raw data"))
     plt.show()
     
-    lifeTimeA = (totalCount * 2 * xErr1[0]) / a
-    print("Lifetime (A coefficient):", lifeTimeA, "usec")
+    lifetimeA = (totalCount * 2 * xErr1[0]) / a
+    print("Lifetime (A coefficient):", lifetimeA, "usec")
     
-    lifeTimeB = 1 / abs(b)
-    print("Lifetime (B coefficient):", lifeTimeB, "usec")
+    lifetimeB = 1 / abs(b)
+    print("Lifetime (B coefficient):", lifetimeB, "usec")
+    
+    # Expected muon decay time is 2.1969811 +/- 0.0000022 usec from https://en.wikipedia.org/wiki/Muon#Muon_decay
+    expectedLifetime = 2.1969811
+    
+    leastSquaresError = leastSquaresDist(expectedLifetime, lifetimeA, lifetimeB)
+    print("Least squares error:", leastSquaresError)
+    
+    distanceError = distance(expectedLifetime, lifetimeA, lifetimeB)
+    print("Distance error:", distanceError)
     

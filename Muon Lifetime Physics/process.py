@@ -9,11 +9,8 @@ Created on Wed Oct 20 13:23:29 2021
 import numpy as np
 import matplotlib.pyplot as plt
 
-def CalculateAvgAndStd(sampleData):
-    avg = np.average(sampleData)
-    std = np.std(sampleData)
-    
-    return avg, std
+from methods import CalculateAvgAndStd
+
 
 isProcess = input("Does this need to be processed (i.e. run process.py) (Yes/No)? ")
 
@@ -68,13 +65,13 @@ if isProcess in yes:
     plt.plot(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
-    plt.title(figureTitle + " Data Points")
+    plt.title(figureTitle)
     
     plt.figure(3)
     plt.semilogy(position, count, 'r.')
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Log of Count")
-    plt.title(figureTitle + " Data Points")
+    plt.title(figureTitle)
     
     # Create a file to write the processed data to
     processedFile = open(processedFileName, "w+")
