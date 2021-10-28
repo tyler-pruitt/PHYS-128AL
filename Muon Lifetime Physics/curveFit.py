@@ -73,7 +73,7 @@ if isCurveFit in yes:
     plt.show()
     
     
-    parameters, covs = curve_fit(exponentialDecay, position, count)
+    parameters, covs = curve_fit(exponentialDecay, position, count, bounds=(0, np.inf))
     
     a, b, c = parameters[0], parameters[1], parameters[2]
     
