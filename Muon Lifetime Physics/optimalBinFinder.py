@@ -40,19 +40,19 @@ error = []
 # Expected muon decay time is 2.1969811 +/- 0.0000022 usec from https://en.wikipedia.org/wiki/Muon#Muon_decay
 expectedLifetime = 2.1969811
 
-isLeastSquares = input("Is the error function least squares (True) or distance (False)? ")
+method = input("Is the error function least squares ('leastsquares') or distance ('distance')? ")
 
 # For each bin calculate the least squares distance and find minError, optimalBin
 for i in range(0, len(lifetimes), 2):
     lifetimeA = lifetimes[i]
     lifetimeB = lifetimes[i+1]
     
-    if isLeastSquares == "True":
+    if method == 'leastsquares':
         binError = leastSquaresDist(expectedLifetime, lifetimeA, lifetimeB)
-    elif isLeastSquares == "False":
+    elif method == 'distance':
         binError = distance(expectedLifetime, lifetimeA, lifetimeB)
     else:
-        raise ValueError("your answer must be 'True' or 'False'")
+        raise ValueError("your answer must be 'leastsquares' or 'distance'")
     
     error += [binError]
     
@@ -68,6 +68,6 @@ x = list(range(bins[0], bins[-1]+1))
 plt.plot(x, error, "r.")
 plt.xlabel("Bin Number")
 plt.ylabel("Error")
-plt.title("Optimal Bin Choice")
+plt.title("Optimal Bin Choice (" + method + "): " + str(optimalBin))
 plt.show()
 
