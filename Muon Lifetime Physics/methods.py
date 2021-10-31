@@ -29,7 +29,7 @@ def errorbar(times, counts):
             countError += [0]
         else:
             timeError += [halfBinSize]
-            countError += [1 / counts[i]]
+            countError += [1 / np.sqrt(counts[i])]
     
     return timeError, countError
 

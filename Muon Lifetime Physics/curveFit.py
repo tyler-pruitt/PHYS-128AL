@@ -58,8 +58,8 @@ if isCurveFit in yes:
     
     plt.figure(2)
     #plt.plot(position, count, 'r.')
-    xErr1, yErr1 = errorbar(position, count)
-    plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
+    xErr, yErr = errorbar(position, count)
+    plt.errorbar(position, count, yerr=yErr, xerr=xErr, fmt="r.")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
     plt.title(title)
@@ -73,7 +73,7 @@ if isCurveFit in yes:
     plt.show()
     
     
-    parameters, covs = curve_fit(exponentialDecay, position, count, bounds=(0, np.inf))
+    parameters, covs = curve_fit(exponentialDecay, position, count, sigma=yErr, bounds=(0, np.inf))
     
     a, b, c = parameters[0], parameters[1], parameters[2]
     
@@ -84,8 +84,8 @@ if isCurveFit in yes:
     print("B:", b, "std:", parameterStd[1])
     print("C:", c, "std:", parameterStd[2])
     
-    print("\nTime Error bars: +/-", xErr1[0], "usec")
-    print("\nCount Error bars: +/-", yErr1, "\n")
+    print("\nTime Error bars: +/-", xErr[0], "usec")
+    print("\nCount Error bars: +/-", yErr, "\n")
     
     modelData = []
     
@@ -93,7 +93,7 @@ if isCurveFit in yes:
         modelData += [exponentialDecay(item, a, b, c)]
     
     plt.figure(4)
-    plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
+    plt.errorbar(position, count, yerr=yErr, xerr=xErr, fmt="r.")
     plt.plot(position, modelData, "b-")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
@@ -101,7 +101,7 @@ if isCurveFit in yes:
     plt.legend(("Model data", "Raw data"))
     plt.show()
     
-    lifetimeA = (totalCount * 2 * xErr1[0]) / a
+    lifetimeA = (totalCount * 2 * xErr[0]) / a
     print("Lifetime (A coefficient):", lifetimeA, "usec")
     
     lifetimeB = 1 / abs(b)

@@ -55,19 +55,19 @@ for i in range(len(bins)):
     
     # Determine the time error and count error
     plt.figure()
-    xErr1, yErr1 = errorbar(position, count)
-    plt.errorbar(position, count, yerr=yErr1, xerr=xErr1, fmt="r.")
+    xErr, yErr = errorbar(position, count)
+    plt.errorbar(position, count, yerr=yErr, xerr=xErr, fmt="r.")
     plt.xlabel("Muon Decay Time (usec)")
     plt.ylabel("Count")
     plt.title(title)
     #plt.show()
     
     
-    parameters, covs = curve_fit(exponentialDecay, position, count, bounds=(0, np.inf))
+    parameters, covs = curve_fit(exponentialDecay, position, count, sigma=yErr, bounds=(0, np.inf))
     
     a, b, c = parameters[0], parameters[1], parameters[2]
     
-    lifetimeA = (totalCount * 2 * xErr1[0]) / a
+    lifetimeA = (totalCount * 2 * xErr[0]) / a
     lifetimeFile.write(str(binNum) + ",A," + str(lifetimeA) + "\n")
     
     lifetimeB = 1 / abs(b)
