@@ -35,3 +35,30 @@ def radiusOfDrop(fallVelocity):
     
     return a
 
+def chargeError(dVf, dVr, Vf, Vr, dV, dn, dd):
+    V = 500
+    rho = 886
+    n = 1.8285 * 10**(-5)
+    g = 9.80665
+    d = 0.00914
+    
+    factor = (4 * np.pi * g * rho / 3)
+    
+    dq = 1 * np.sqrt( ((dVf + dVr) / (Vf + Vr))**2 + (dd / d)**2 + (dV / V)**2 + (745 / 16) * (dVf / Vf)**2 + (729 / 16) * (dn / n)**2 )
+    
+    return dq
+
+response = input("To end enter 'end', else press enter: ")
+
+while response != "end":
+    Vrise = float(input("Enter Vrise: "))
+    Vfall = float(input("Enter Vfall: "))
+    
+    q = chargeOfDrop(Vfall, Vrise)
+    e = 1.60217662 * 10**(-19)
+    
+    print("Charge:", q, "C")
+    print("Charge:", q/e, "e")
+    
+    response = input("To end enter 'end', else press enter: ")
+
