@@ -135,21 +135,16 @@ plt.ylabel("Charge (in e)")
 plt.title("Quantization of Charge")
 plt.show()
 
-one = len(xAxis) * [1]
-two = len(xAxis) * [2]
-three = len(xAxis) * [3]
-four = len(xAxis) * [4]
-five = len(xAxis) * [5]
-six = len(xAxis) * [6]
+lines = []
+for i in range(1, 7):
+    lines += [len(xAxis) * [i]]
 
 plt.figure(3)
 plt.errorbar(xAxis, yAxis, yerr=yError, fmt="r.")
-plt.plot(xAxis, one, "b-")
-plt.plot(xAxis, two, "b-")
-plt.plot(xAxis, three, "b-")
-plt.plot(xAxis, four, "b-")
-plt.plot(xAxis, five, "b-")
-plt.plot(xAxis, six, "b-")
+
+for i in range(6):
+    plt.plot(xAxis, lines[i], "b-")
+
 plt.xlabel("Drop Number")
 plt.ylabel("Charge (in e)")
 plt.title("Quantization of Charge")
