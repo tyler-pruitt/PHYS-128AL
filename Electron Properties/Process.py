@@ -187,3 +187,29 @@ plt.ylabel("Charge (in e)")
 #plt.title("Quantization of Charge")
 plt.show()
 
+charge, error = [], []
+
+for i in range(len(sortedDrops)):
+    charge += [sortedDrops[i].chargeInE]
+    error += [sortedDrops[i].dqInE]
+
+# Sort 'charge' and 'error' for ascending charge
+# Use selection sort
+for i in range(len(charge)):
+    minIndex = i
+    
+    for j in range(i+1, len(charge)):
+        if charge[minIndex] > charge[j]:
+            minIndex = j
+    
+    charge[i], charge[minIndex] = charge[minIndex], charge[i]
+    error[i], error[minIndex] = error[minIndex], error[i]
+
+
+plt.figure(4)
+plt.plot(charge, error, "r.")
+plt.xlabel("Charge (in e)")
+plt.ylabel("Error in Charge (in e)")
+#plt.title("Trend in Error and Charge")
+plt.show()
+
